@@ -5,9 +5,11 @@ import {goBack, closeModal, setStory} from "./js/store/router/actions";
 import * as VK from './js/services/VK';
 
 import {Epic, View, Root, Tabbar, ModalRoot, TabbarItem, ConfigProvider} from "@vkontakte/vkui";
+import './css/test.css';
 
-import Icon28Newsfeed from '@vkontakte/icons/dist/28/newsfeed';
-import Icon28More from '@vkontakte/icons/dist/28/more';
+import Icon28MarketOutline from '@vkontakte/icons/dist/28/market_outline';
+import Icon28User from '@vkontakte/icons/dist/28/user';
+import Icon28ArticleOutline from '@vkontakte/icons/dist/28/article_outline';
 
 import HomePanelBase from './js/panels/home/base';
 import HomePanelGroups from './js/panels/home/groups';
@@ -77,18 +79,23 @@ class App extends React.Component {
             </ModalRoot>
         );
 
+
         return (
             <ConfigProvider isWebView={true} scheme={colorScheme}>
                 <Epic activeStory={activeStory} tabbar={
-                    <Tabbar>
+                    <Tabbar >
                         <TabbarItem
                             onClick={() => setStory('home', 'base')}
                             selected={activeStory === 'home'}
-                        ><Icon28Newsfeed/></TabbarItem>
+                        ><Icon28MarketOutline/></TabbarItem>
                         <TabbarItem
                             onClick={() => setStory('more', 'callmodal')}
                             selected={activeStory === 'more'}
-                        ><Icon28More/></TabbarItem>
+                        ><Icon28ArticleOutline/></TabbarItem>
+                        <TabbarItem
+                            onClick={() => setStory('more', 'callmodal')}
+                            selected={activeStory === 'more'}
+                        ><Icon28User/></TabbarItem>
                     </Tabbar>
                 }>
                     <Root id="home" activeView={activeView} popout={popout}>
@@ -141,6 +148,7 @@ const mapStateToProps = (state) => {
 
         colorScheme: state.vkui.colorScheme
     };
+
 };
 
 

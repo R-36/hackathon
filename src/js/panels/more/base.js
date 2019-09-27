@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {setPage} from "../../store/router/actions";
 import {setActiveTab, setScrollPositionByID} from "../../store/vk/actions";
 import {restoreScrollPosition} from "../../services/_functions";
+import './test2.css';
 
 import {
     Div,
@@ -50,7 +51,7 @@ class HomePanelProfile extends React.Component {
 
         return (
             <Panel id={id}>
-                <PanelHeader noShadow={true}>Examples 2</PanelHeader>
+                <PanelHeader noShadow={true}>Задания</PanelHeader>
                 <FixedLayout vertical="top">
                     <Tabs theme="header" type="buttons">
                         <HorizontalScroll id="EXAMPLE_TABS_LIST">
@@ -58,25 +59,25 @@ class HomePanelProfile extends React.Component {
                                 onClick={() => this.setTab('modal')}
                                 selected={this.state.activeTab === 'modal'}
                             >
-                                Модальное окно
+                                Все
                             </TabsItem>
                             <TabsItem
                                 onClick={() => this.setTab('test')}
                                 selected={this.state.activeTab === 'test'}
                             >
-                                Для теста
+                                Актуальные
                             </TabsItem>
                             <TabsItem
                                 onClick={() => this.setTab('test2')}
                                 selected={this.state.activeTab === 'test2'}
                             >
-                                Для теста 2
+                                Спортивные
                             </TabsItem>
                             <TabsItem
                                 onClick={() => this.setTab('test3')}
                                 selected={this.state.activeTab === 'test3'}
                             >
-                                Для теста 3
+                                Личные
                             </TabsItem>
                         </HorizontalScroll>
                     </Tabs>

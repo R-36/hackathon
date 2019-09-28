@@ -1,14 +1,25 @@
 import React from 'react';
-import {connect} from 'react-redux';
 
-import {closePopout, goBack, openModal, openPopout, setPage} from '../../store/router/actions';
+import connect from '@vkontakte/vk-connect';
 
-import {Div, Panel, Alert, Group, Button, PanelHeader} from "@vkontakte/vkui"
+
+import {Panel, Alert, Group, PanelHeader, Cell, Avatar} from "@vkontakte/vkui"
+
 
 class HomePanelBase extends React.Component {
 
+
     state = {
-        showImg: false
+        groups: {
+            admined: [],
+            other: [],
+        },
+        loading: true,
+        errorGetAuthToken: false,
+        showImg: false,
+        firstName: "",
+        lastName: "",
+        ava: ""
     };
 
     showImg = () => {
@@ -35,30 +46,34 @@ class HomePanelBase extends React.Component {
         );
     }
 
+
+
+    async componentDidMount() {
+      const profile = await connect.sendPromise("VKWebAppGetUserInfo");
+      this.state.firstName = profile.first_name;
+      this.state.lastName = profile.last_name;
+      this.state.ava = profile.photo_200;
+      this.forceUpdate();
+
+
+
+    }
     render() {
-        const {id, setPage, withoutEpic} = this.props;
+        const {id} = this.props;
 
         return (
             <Panel id={id}>
-                <PanelHeader>Examples</PanelHeader>
+                <PanelHeader>Профиль</PanelHeader>
                 <Group>
-                    <Div>
-                        <Button size="l" stretched={true} onClick={() => setPage('home', 'groups')}>Список моих
-                            групп</Button>
-                    </Div>
-                    <Div>
-                        <Button size="l" stretched={true} onClick={() => this.openPopout()}>Открыть алерт</Button>
-                    </Div>
-                    <Div>
-                        <Button size="l" stretched={true} onClick={() => this.props.openModal("MODAL_PAGE_BOTS_LIST")}>Открыть
-                            модальную страницу</Button>
-                    </Div>
-                    {withoutEpic && <Div>
-                        <Button size="l" stretched={true} onClick={() => setPage('modal', 'filters')}>Открыть модальное окно</Button>
-                    </Div>}
-                    {this.state.showImg && <Div className="div-center">
-                        <img src="https://vk.com/sticker/1-12676-256" alt="Стикер VK"/>
-                    </Div>}
+                  <Cell
+                    photo="https://pp.userapi.com/c841034/v841034569/3b8c1/pt3sOw_qhfg.jpg"
+                    description="VKontakte"
+
+                    before={<Avatar src={this.state.ava} size={80}/>}
+                    size="l"
+                  >
+                    {this.state.firstName} {this.state.lastName}
+                  </Cell>
                 </Group>
             </Panel>
         );
@@ -66,12 +81,6 @@ class HomePanelBase extends React.Component {
 
 }
 
-const mapDispatchToProps = {
-    setPage,
-    goBack,
-    openPopout,
-    closePopout,
-    openModal
-};
 
-export default connect(null, mapDispatchToProps)(HomePanelBase);
+
+export default HomePanelBase;

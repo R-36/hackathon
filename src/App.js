@@ -20,6 +20,9 @@ import MorePanelExample from './js/panels/more/example';
 import HomeBotsListModal from './js/components/modals/HomeBotsListModal';
 import HomeBotInfoModal from './js/components/modals/HomeBotInfoModal';
 
+import Market from './js/panels/market/store';
+
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -31,7 +34,6 @@ class App extends React.Component {
         const {goBack, dispatch} = this.props;
 
         dispatch(VK.initApp());
-
         window.onpopstate = () => {
             let timeNow = +new Date();
 
@@ -57,6 +59,10 @@ class App extends React.Component {
 
             window.scroll(0, pageScrollPosition);
         }
+    }
+
+    getProfile() {
+      connect.send("VKWebAppGetUserInfo", {});
     }
 
     render() {
@@ -85,16 +91,16 @@ class App extends React.Component {
                 <Epic activeStory={activeStory} tabbar={
                     <Tabbar >
                         <TabbarItem
-                            onClick={() => setStory('home', 'base')}
-                            selected={activeStory === 'home'}
+                            onClick={() => setStory('market', 'store')}
+                            selected={activeStory === 'market'}
                         ><Icon28MarketOutline/></TabbarItem>
                         <TabbarItem
                             onClick={() => setStory('more', 'callmodal')}
                             selected={activeStory === 'more'}
                         ><Icon28ArticleOutline/></TabbarItem>
                         <TabbarItem
-                            onClick={() => setStory('more', 'callmodal')}
-                            selected={activeStory === 'more'}
+                            onClick={() => setStory('home', 'base')}
+                            selected={activeStory === 'home'}
                         ><Icon28User/></TabbarItem>
                     </Tabbar>
                 }>
@@ -108,6 +114,17 @@ class App extends React.Component {
                         >
                             <HomePanelBase id="base" withoutEpic={false}/>
                             <HomePanelGroups id="groups"/>
+                        </View>
+                    </Root>
+                    <Root id="market" activeView={activeView} popout={popout}>
+                        <View
+                            id="market"
+                            modal={homeModals}
+                            activePanel={activePanel}
+                            history={history}
+                            onSwipeBack={() => goBack()}
+                        >
+                            <Market id="store" withoutEpic={false}/>
                         </View>
                     </Root>
                     <Root id="more" activeView={activeView} popout={popout}>

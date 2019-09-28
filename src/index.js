@@ -17,11 +17,17 @@ import './css/main.css';
 
 import App from './App';
 
+import connect from '@vkontakte/vk-connect';
+
+
 export const store = createStore(rootReducer, composeWithDevTools(
     applyMiddleware(thunk),
 ));
 
+connect.subscribe((e) => console.log(e));
+
 store.dispatch(setStory('home', 'base'));
+
 
 ReactDOM.render(
     <Provider store={store}>

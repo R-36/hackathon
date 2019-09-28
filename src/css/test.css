@@ -16,3 +16,9 @@
 .Tabs--header {
   background-color: #009cff !important;
 }
+.storeButton1 {
+  margin-right: 10px;
+}
+#storeButton2 {
+  margin-left: 90px;
+}
